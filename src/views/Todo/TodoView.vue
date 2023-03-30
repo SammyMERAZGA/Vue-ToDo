@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-center">To Do List App</h1>
+    <h1 class="text-center">Home</h1>
 
     <v-text-field
       v-model="newTodoTitle"
@@ -10,8 +10,8 @@
       outlined
       hide-details
       clearable
-      @click:append="addTodo"
-      @keyup.enter="addTodo"
+      @click:append="addTodo()"
+      @keyup.enter="addTodo()"
     ></v-text-field>
 
     <div v-for="todo in todos" :key="todo.id">

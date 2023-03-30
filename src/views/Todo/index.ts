@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { Todo } from "@/types/todo";
 
-export default class HomeView extends Vue {
+export default class TodoView extends Vue {
   newTodoTitle = "";
 
   todos: Todo[] = [];
