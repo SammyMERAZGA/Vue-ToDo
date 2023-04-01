@@ -1,0 +1,27 @@
+.border {
+  margin: 0px 8px;
+  background: #fd2a65;
+  border-radius: 15px;
+  text-decoration: none;
+  width: 60px;
+  height: 60px;
+}
+.v-list-item-group .v-list-item--active {
+  color: white !important;
+}
+.v-list-item__content {
+  padding: 20px 0 !important;
+}
+.image {
+  border: 1px solid white;
+}
+
+#logout {
+  position: absolute;
+  bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+}

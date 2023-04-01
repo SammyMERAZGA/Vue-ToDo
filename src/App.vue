@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <Navbar />
+    <Sidebar />
     <v-main>
-      Léo Chastagac c'est vraiment le meilleur dev, il est meilleur que mo;
+      <router-view />
     </v-main>
   </v-app>
 </template>
@@ -10,11 +10,11 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import Navbar from "@/components/Navbar.vue";
+import Sidebar from "@/ui/components/Sidebar/Sidebar.vue";
 
 @Component({
   components: {
-    Navbar,
+    Sidebar,
   },
 })
 export default class App extends Vue {}
