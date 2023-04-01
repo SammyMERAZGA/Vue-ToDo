@@ -7,7 +7,7 @@
   >
     <v-avatar class="d-block text-center mx-auto mt-5 mb-10" size="60">
       <v-img
-        src="https://i.pinimg.com/550x/af/2b/fa/af2bfaf5a2a139b47b3b8665b2540d08.jpg"
+        src="https://i.pinimg.com/736x/c7/15/e3/c715e34c2a5aee22020e1d738c48ebee.jpg"
       />
     </v-avatar>
 

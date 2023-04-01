@@ -2,4 +2,4 @@ import Vue from "vue";
 import Component from "vue-class-component";
 
 @Component
-export default class DeletedTasks extends Vue {}
+export default class Statuses extends Vue {}
