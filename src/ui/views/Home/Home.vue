@@ -4,6 +4,14 @@
     <v-row align="center" justify="center">
       <img id="beast" src="@/assets/gohan.jpeg" alt="Beast" width="500" />
     </v-row>
+    <v-row align="center" justify="center">
+      <h1 class="overline indigo--text text-center">Ajouter une note</h1>
+    </v-row>
+    <v-row align="center" justify="center">
+      <v-btn class="rounded-xl mt-2" color="blue darken-4" dark>
+        <v-icon>mdi-note-plus</v-icon>
+      </v-btn>
+    </v-row>
     <v-row class="pa-5" justify="center" align="center">
       <v-card
         v-for="note in notes"
