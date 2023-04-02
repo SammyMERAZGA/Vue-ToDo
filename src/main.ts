@@ -4,6 +4,9 @@ import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
+import { MotionPlugin } from "@vueuse/motion";
+
+Vue.use(MotionPlugin);
 
 Vue.config.productionTip = false;
 

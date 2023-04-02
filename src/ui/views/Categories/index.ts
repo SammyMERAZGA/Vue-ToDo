@@ -100,4 +100,11 @@ export default class Categories extends Vue {
     this.category.name = "";
     this.category.description = "";
   }
+
+  colorRow(item: Category) {
+    const position = this.categories.indexOf(item, 0);
+    if (position % 2 == 0) {
+      return "blue lighten-5";
+    }
+  }
 }

@@ -17,10 +17,11 @@
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-card width="1200" class="rounded-xl mt-8" elevation="5">
+        <v-card width="1200" class="rounded-xl mt-8 table-card" elevation="5">
           <v-data-table
             :headers="headersStatusesTable"
             :items="statuses"
+            :item-class="colorRow"
             :footer-props="{
               'items-per-page-text': 'Nb éléments par page',
               'items-per-page-all-text': 'Tout',
@@ -41,7 +42,11 @@
                 <v-icon small color="indigo darken-1"> mdi-pencil </v-icon>
               </v-btn>
               <v-btn icon>
-                <v-icon small color="red" @click="deleteStatus(item.id)">
+                <v-icon
+                  small
+                  color="pink lighten-1"
+                  @click="deleteStatus(item.id)"
+                >
                   mdi-delete
                 </v-icon>
               </v-btn>
@@ -120,7 +125,7 @@
       <!-- Delete status -->
       <Snackbar
         message="Votre statut a bien été supprimé."
-        color="red"
+        color="pink lighten-1"
         ref="snackbarDeleteStatus"
       />
     </v-container>

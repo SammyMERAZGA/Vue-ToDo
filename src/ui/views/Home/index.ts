@@ -1,7 +1,11 @@
-import Vue from "vue";
-import Component from "vue-class-component";
+import { Component, Vue } from "vue-property-decorator";
+import FilterBar from "@/ui/components/FilterBar.vue";
 
-@Component
+@Component({
+  components: {
+    FilterBar,
+  },
+})
 export default class Home extends Vue {
   page = 1;
 
@@ -10,31 +14,46 @@ export default class Home extends Vue {
       id: 1,
       title: "Note 1",
       category: "Category 1",
-      description: "This is a note",
+      status: "À faire",
+      color: "blue darken-2",
+      description:
+        "This is a note, this is a note, his is a note, his is a note, his is a note.",
     },
     {
       id: 2,
       title: "Note 2",
       category: "Category 2",
-      description: "This is a note",
+      status: "En cours",
+      color: "orange darken-2",
+      description:
+        "This is a note, this is a note, his is a note, his is a note, his is a note.",
     },
     {
       id: 3,
       title: "Note 3",
       category: "Category 3",
-      description: "This is a note",
+      status: "Terminée",
+      color: "green",
+      description:
+        "This is a note, this is a note, his is a note, his is a note, his is a note.",
     },
     {
       id: 4,
       title: "Note 4",
       category: "Category 4",
-      description: "This is a note",
+      status: "Terminée",
+      color: "green",
+      description:
+        "This is a note, this is a note, his is a note, his is a note, his is a note.",
     },
     {
       id: 5,
       title: "Note 5",
       category: "Category 5",
-      description: "This is a note",
+      status: "Terminée",
+      color: "green",
+      description:
+        "This is a note, this is a note, his is a note, his is a note, his is a note.",
     },
   ];
 }

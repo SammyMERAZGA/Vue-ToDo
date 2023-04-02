@@ -25,6 +25,8 @@ export default class Statuses extends Vue {
 
   headersStatusesTable = [
     { text: "Nom", value: "name" },
+    { text: "Icône", value: "icon" },
+    { text: "Couleur", value: "color" },
     { text: "Date de création", value: "createdAt" },
     { text: "Actions", value: "actions", sortable: false },
   ];
@@ -89,5 +91,12 @@ export default class Statuses extends Vue {
   /* OTHERS METHODS */
   clear(): void {
     this.status.name = "";
+  }
+
+  colorRow(item: Status) {
+    const position = this.statuses.indexOf(item, 0);
+    if (position % 2 == 0) {
+      return "blue lighten-5";
+    }
   }
 }
