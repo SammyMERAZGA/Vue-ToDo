@@ -12,7 +12,7 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import Sidebar from "@/ui/components/Sidebar/Sidebar.vue";
-import Footer from "@/ui/components/Footer/Footer.vue";
+import Footer from "@/ui/components/Footer.vue";
 
 @Component({
   components: {

@@ -3,7 +3,7 @@
     <Overlay />
     <v-dialog
       class="mb-15"
-      v-model="addCategoryDialog"
+      v-model="addStatusDialog"
       persistent
       max-width="600px"
     >
@@ -16,7 +16,7 @@
             v-bind="attrs"
             v-on="on"
           >
-            <v-icon>mdi-tag-plus</v-icon>
+            <v-icon>mdi-table-plus</v-icon>
           </v-btn>
         </v-row>
       </template>
@@ -25,46 +25,31 @@
           <v-row align="center" justify="center">
             <v-toolbar-title>
               <span>
-                <v-icon>mdi-plus-circle-outline</v-icon>
-                Ajouter une catégorie</span
+                <v-icon>mdi-table-plus</v-icon>
+                Ajouter un statut</span
               >
             </v-toolbar-title>
           </v-row>
         </v-toolbar>
         <v-row align="center" justify="center">
-          <v-img
-            src="@/assets/category.png"
-            height="200"
-            max-width="200"
-          ></v-img>
+          <v-img src="@/assets/status.png" height="200" max-width="200"></v-img>
         </v-row>
         <v-card-text>
           <v-container>
             <v-row>
               <v-col cols="12">
                 <v-text-field
-                  v-model="category.name"
-                  label="Nom de la catégorie*"
-                  placeholder="Jeux vidéos"
+                  v-model="status.name"
+                  label="Nom du statut*"
+                  placeholder="À faire"
                   prepend-icon="mdi-tag"
                   :rules="nameRules"
-                  :counter="50"
+                  :counter="30"
                   color="#fd2a65"
                   required
                   clearable
                   filled
                 ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-textarea
-                  v-model="category.description"
-                  label="Description"
-                  prepend-icon="mdi-text-box"
-                  placeholder="Dans cette catégorie, il y aura des notes concernant les jeux vidéos."
-                  color="#fd2a65"
-                  clearable
-                  filled
-                ></v-textarea>
               </v-col>
             </v-row>
           </v-container>
@@ -78,22 +63,22 @@
             class="rounded-xl"
             color="red"
             text
-            @click="addCategoryDialog = false"
+            @click="addStatusDialog = false"
           >
             Annuler
           </v-btn>
-          <v-btn class="rounded-xl" color="indigo" text @click="addCategory()">
+          <v-btn class="rounded-xl" color="indigo" text @click="addStatus()">
             Ajouter
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
     <!-- SNACKBAR -->
-    <!-- Add category -->
+    <!-- Add status -->
     <Snackbar
-      message="Votre catégorie a bien été ajoutée !"
+      message="Votre statut a bien été ajoutée !"
       color="green"
-      ref="snackbarAddCategory"
+      ref="snackbarAddStatus"
     />
     <!-- Field missing -->
     <Snackbar
@@ -108,10 +93,10 @@
 import { Component, Vue } from "vue-property-decorator";
 import axios from "axios";
 // Views
-import Categories from "@/ui/views/Categories/Categories.vue";
+import Statuses from "@/ui/views/Statuses/Statuses.vue";
 // Components
-import Snackbar from "../Snackbar.vue";
 import Overlay from "../Overlay.vue";
+import Snackbar from "../Snackbar.vue";
 
 @Component({
   components: {
@@ -119,41 +104,37 @@ import Overlay from "../Overlay.vue";
     Overlay,
   },
 })
-export default class AddCategory extends Vue {
-  category = {
+export default class AddStatus extends Vue {
+  status = {
     name: "",
-    description: "",
   };
 
-  addCategoryDialog = false;
+  addStatusDialog = false;
   overlay = false;
 
   nameRules = [
-    (v: string) => !!v || "Le nom de la catégorie est obligatoire",
+    (v: string) => !!v || "Le nom du statut est obligatoire",
     (v: string) =>
-      v.length <= 50 ||
-      "Le nom de la catégorie doit faire moins de 50 caractères",
+      v.length <= 50 || "Le nom du statut doit faire moins de 30 caractères",
   ];
 
-  addCategory(): void {
-    if (this.category.name === "") {
+  addStatus(): void {
+    if (this.status.name === "") {
       this.showSnackbarFieldsMissing();
       return;
     } else {
       this.overlay = true;
       axios
-        .post(process.env.VUE_APP_API_URL + `/category`, {
-          name: this.category.name,
-          description: this.category.description,
+        .post(process.env.VUE_APP_API_URL + `/status`, {
+          name: this.status.name,
           createdAt: new Date(),
         })
         .then(() => {
-          this.addCategoryDialog = false;
+          this.addStatusDialog = false;
           this.overlay = false;
-          (this.$parent as Categories).getCategories();
-          this.showSnackbarAddCategory();
-          this.category.name = "";
-          this.category.description = "";
+          (this.$parent as Statuses).getStatuses();
+          this.showSnackbarAddStatus();
+          this.status.name = "";
         })
         .catch((error) => {
           console.log(error);
@@ -162,8 +143,7 @@ export default class AddCategory extends Vue {
   }
 
   clear(): void {
-    this.category.name = "";
-    this.category.description = "";
+    this.status.name = "";
   }
 
   /* SNACKBAR */
@@ -172,8 +152,8 @@ export default class AddCategory extends Vue {
     snackbar.show();
   }
 
-  showSnackbarAddCategory(): void {
-    const snackbar = this.$refs.snackbarAddCategory as Snackbar;
+  showSnackbarAddStatus(): void {
+    const snackbar = this.$refs.snackbarAddStatus as Snackbar;
     snackbar.show();
   }
 }

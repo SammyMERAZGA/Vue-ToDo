@@ -18,6 +18,6 @@ export default class Sidebar extends Vue {
       text: "Notes supprimées",
       link: "/notes-supprimees",
     },
-    { icon: "mdi-cog", text: "Paramètres", link: "/parametres" },
+    { icon: "mdi-cog", text: "Paramètres du compte", link: "/parametres" },
   ];
 }

@@ -12,7 +12,7 @@
         <v-icon>mdi-note-plus</v-icon>
       </v-btn>
     </v-row>
-    <v-row class="pa-5" justify="center" align="center">
+    <v-row class="pa-5 mb-5" justify="center" align="center">
       <v-card
         v-for="note in notes"
         :key="note.id"
@@ -37,6 +37,12 @@
         </v-card-actions>
       </v-card>
     </v-row>
+    <v-pagination
+      v-model="page"
+      color="#fd2a65"
+      :length="4"
+      circle
+    ></v-pagination>
   </v-container>
 </template>
 

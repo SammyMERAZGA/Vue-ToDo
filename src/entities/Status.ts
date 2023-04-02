@@ -1,6 +1,5 @@
-export type Category = {
+export type Status = {
   id: number;
   name: string;
-  description: string;
   createdAt: string;
 };

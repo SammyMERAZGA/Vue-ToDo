@@ -56,7 +56,7 @@
       max-width="600px"
     >
       <v-card class="rounded-xl">
-        <v-toolbar color="indigo darken-4" class="mb-5" dark>
+        <v-toolbar color="#023e8a" class="mb-5" dark>
           <v-row align="center" justify="center">
             <v-toolbar-title>
               <span>
@@ -71,21 +71,25 @@
             <v-row>
               <v-col cols="12">
                 <v-text-field
-                  v-model="name"
-                  label="Nom de la catégorie"
-                  placeholder="Entrer le nom de la catégorie"
+                  v-model="category.name"
+                  label="Nom de la catégorie*"
+                  placeholder="Entrer le nouveau nom de la catégorie"
                   prepend-icon="mdi-tag"
                   color="#fd2a65"
-                  required
+                  :rules="nameRules"
+                  :counter="50"
+                  clearable
+                  filled
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-textarea
-                  v-model="description"
-                  label="Description*"
-                  prepend-icon="mdi-tag"
-                  placeholder="Entrer la description de la catégorie"
+                  v-model="category.description"
+                  label="Description"
+                  prepend-icon="mdi-text-box"
+                  placeholder="Entrer la nouvelle description de la catégorie"
                   color="#fd2a65"
+                  clearable
                   filled
                 ></v-textarea>
               </v-col>
@@ -94,6 +98,9 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
+          <v-btn class="rounded-xl" color="black" text @click="clear()">
+            Tout effacer
+          </v-btn>
           <v-btn
             class="rounded-xl"
             color="red"
@@ -115,33 +122,17 @@
     </v-dialog>
     <!-- SNACKBAR -->
     <!-- Update category -->
-    <v-snackbar color="blue" v-model="snackbarUpdateCategory"
-      >Votre catégorie a bien été modifiée !
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          color="white"
-          text
-          v-bind="attrs"
-          @click="snackbarUpdateCategory = false"
-        >
-          Fermer
-        </v-btn>
-      </template>
-    </v-snackbar>
+    <Snackbar
+      message="Votre catégorie a bien été modifiée."
+      color="blue"
+      ref="snackbarUpdateCategory"
+    />
     <!-- Delete category -->
-    <v-snackbar color="red" v-model="snackbarDeleteCategory"
-      >Votre catégorie a bien été supprimée.
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          color="white"
-          text
-          v-bind="attrs"
-          @click="snackbarDeleteCategory = false"
-        >
-          Fermer
-        </v-btn>
-      </template>
-    </v-snackbar>
+    <Snackbar
+      message="Votre catégorie a bien été supprimée."
+      color="red"
+      ref="snackbarDeleteCategory"
+    />
   </v-container>
 </template>
 
