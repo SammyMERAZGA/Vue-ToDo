@@ -19,16 +19,32 @@ export default class Statuses extends Vue {
   status = {
     id: 0,
     name: "",
+    icon: "",
+    color: "",
   };
 
   updateStatusDialog = false;
 
   headersStatusesTable = [
-    { text: "Nom", value: "name" },
-    { text: "Icône", value: "icon" },
-    { text: "Couleur", value: "color" },
-    { text: "Date de création", value: "createdAt" },
-    { text: "Actions", value: "actions", sortable: false },
+    { text: "Nom", value: "name", class: "indigo--text text--darken-4" },
+    { text: "Icône", value: "icon", class: "indigo--text text--darken-4" },
+    { text: "Couleur", value: "color", class: "indigo--text text--darken-4" },
+    {
+      text: "Date de création",
+      value: "createdAt",
+      class: "indigo--text text--darken-4",
+    },
+    {
+      text: "Actions",
+      value: "actions",
+      sortable: false,
+      class: "indigo--text text--darken-4",
+    },
+  ];
+
+  icons = [
+    { name: "Validé", value: "mdi-check" },
+    { name: "Fermer", value: "mdi-close" },
   ];
 
   nameRules = [
@@ -50,6 +66,8 @@ export default class Statuses extends Vue {
   editStatus(status: Status): void {
     this.status.id = status.id;
     this.status.name = status.name;
+    this.status.icon = status.icon;
+    this.status.color = status.color;
     this.updateStatusDialog = true;
   }
 
@@ -57,6 +75,8 @@ export default class Statuses extends Vue {
     await updateStatus({
       id: this.status.id,
       name: this.status.name,
+      icon: this.status.icon,
+      color: this.status.color,
     });
     this.getStatuses();
     this.updateStatusDialog = false;
@@ -80,10 +100,17 @@ export default class Statuses extends Vue {
     this.status.name = "";
   }
 
+  goToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
   colorRow(item: Status) {
     const position = this.statuses.indexOf(item, 0);
     if (position % 2 == 0) {
-      return "blue lighten-5";
+      return "pink lighten-5";
     }
   }
 

@@ -31,5 +31,17 @@ export default class App extends Vue {}
 
 .no-scrollable {
   overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.borderBtn {
+  border: #0f4cae 2px solid !important;
+  color: #fff;
+  font-weight: 900;
+}
+
+.borderBtn:hover {
+  transition: all 0.3s;
+  transform: scale(1.3);
 }
 </style>

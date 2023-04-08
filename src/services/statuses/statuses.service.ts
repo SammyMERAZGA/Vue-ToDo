@@ -8,9 +8,21 @@ export async function getStatuses() {
   return statuses.data as Status[];
 }
 
-export function updateStatus({ id, name }: { id: number; name: string }) {
+export function updateStatus({
+  id,
+  name,
+  icon,
+  color,
+}: {
+  id: number;
+  name: string;
+  icon: string;
+  color: string;
+}) {
   axios.post(`/status/${id}`, {
     name,
+    icon,
+    color,
   });
 }
 

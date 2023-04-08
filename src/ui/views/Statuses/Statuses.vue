@@ -12,7 +12,7 @@
       </v-row>
       <v-row align="center" justify="center">
         <v-col cols="12" sm="4">
-          <h1 class="overline indigo--text text-center">Ajouter un statut</h1>
+          <h1 class="overline black--text text-center">Ajouter un statut</h1>
           <AddStatus />
         </v-col>
       </v-row>
@@ -56,6 +56,25 @@
           </v-data-table>
         </v-card>
       </v-row>
+      <v-row class="mt-15" justify="center" align="center">
+        <v-tooltip top color="#fd2a65">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              class="mx-2 borderBtn"
+              color="#fd2a65"
+              v-bind="attrs"
+              v-on="on"
+              fab
+              small
+              dark
+              @click="goToTop()"
+            >
+              <v-icon dark> mdi-arrow-up-left-bold </v-icon>
+            </v-btn>
+          </template>
+          <span class="font-weight-black"> Retourner en haut </span>
+        </v-tooltip>
+      </v-row>
       <!-- DIALOG UPDATE -->
       <v-dialog
         class="mb-15"
@@ -89,6 +108,42 @@
                     clearable
                     filled
                   ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-select
+                    v-model="status.icon"
+                    :items="icons"
+                    label="Icône*"
+                    prepend-icon="mdi-material-design"
+                    item-text="name"
+                    item-value="value"
+                    color="#fd2a65"
+                    required
+                    clearable
+                    filled
+                  >
+                    <template #selection="{ item }">
+                      <v-chip
+                        v-if="item.name"
+                        class="ma-2"
+                        color="#fd2a65"
+                        text-color="white"
+                      >
+                        <v-avatar left>
+                          <v-icon>{{ item.value }}</v-icon>
+                        </v-avatar>
+                        {{ item.name }}
+                      </v-chip>
+                    </template>
+                  </v-select>
+                </v-col>
+                <v-col align="center" cols="12">
+                  <v-color-picker
+                    v-model="status.color"
+                    dot-size="23"
+                    mode="hexa"
+                    swatches-max-height="160"
+                  ></v-color-picker>
                 </v-col>
               </v-row>
             </v-container>

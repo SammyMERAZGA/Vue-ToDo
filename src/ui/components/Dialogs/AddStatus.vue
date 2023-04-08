@@ -2,7 +2,7 @@
   <div>
     <Overlay />
     <v-dialog
-      class="mb-15"
+      class="mb-15 no-scrollable"
       v-model="addStatusDialog"
       persistent
       max-width="600px"
@@ -10,8 +10,8 @@
       <template v-slot:activator="{ on, attrs }">
         <v-row align="center" justify="center">
           <v-btn
-            class="rounded-xl mt-5"
-            color="blue darken-4"
+            class="rounded-xl mt-5 borderBtn"
+            color="#fd2a65"
             dark
             v-bind="attrs"
             v-on="on"
@@ -40,7 +40,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="status.name"
-                  label="Nom du statut*"
+                  label="Nom*"
                   placeholder="À faire"
                   prepend-icon="mdi-tag"
                   :rules="nameRules"
@@ -51,23 +51,59 @@
                   filled
                 ></v-text-field>
               </v-col>
+              <v-col cols="12">
+                <v-select
+                  v-model="status.icon"
+                  :items="icons"
+                  label="Icône*"
+                  prepend-icon="mdi-material-design"
+                  item-text="name"
+                  item-value="value"
+                  color="#fd2a65"
+                  required
+                  clearable
+                  filled
+                >
+                  <template #selection="{ item }">
+                    <v-chip
+                      v-if="item.name"
+                      class="ma-2"
+                      color="#fd2a65"
+                      text-color="white"
+                    >
+                      <v-avatar left>
+                        <v-icon>{{ item.value }}</v-icon>
+                      </v-avatar>
+                      {{ item.name }}
+                    </v-chip>
+                  </template>
+                </v-select>
+              </v-col>
+              <v-col align="center" cols="12">
+                <v-color-picker
+                  v-model="status.color"
+                  dot-size="23"
+                  mode="hexa"
+                  swatches-max-height="160"
+                ></v-color-picker>
+              </v-col>
             </v-row>
           </v-container>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn class="rounded-xl" color="black" text @click="clear()">
-            Tout effacer
+          <v-btn id="btnClear" dark icon text @click="clear()">
+            <v-icon color="#023e8a">mdi-broom</v-icon>
           </v-btn>
           <v-btn
             class="rounded-xl"
-            color="red"
+            color="#fd2a65"
             text
             @click="addStatusDialog = false"
           >
             Annuler
           </v-btn>
-          <v-btn class="rounded-xl" color="indigo" text @click="addStatus()">
+          <v-btn class="rounded-xl" color="#00296b" text @click="addStatus()">
             Ajouter
           </v-btn>
         </v-card-actions>
@@ -107,6 +143,8 @@ import Snackbar from "../Snackbar.vue";
 export default class AddStatus extends Vue {
   status = {
     name: "",
+    icon: "",
+    color: "",
   };
 
   addStatusDialog = false;
@@ -118,6 +156,11 @@ export default class AddStatus extends Vue {
       v.length <= 50 || "Le nom du statut doit faire moins de 30 caractères",
   ];
 
+  icons = [
+    { name: "Validé", value: "mdi-check" },
+    { name: "Fermer", value: "mdi-close" },
+  ];
+
   addStatus(): void {
     if (this.status.name === "") {
       this.showSnackbarFieldsMissing();
@@ -127,6 +170,8 @@ export default class AddStatus extends Vue {
       axios
         .post(process.env.VUE_APP_API_URL + `/status`, {
           name: this.status.name,
+          icon: this.status.icon,
+          color: this.status.color,
           createdAt: new Date(),
         })
         .then(() => {
@@ -143,7 +188,15 @@ export default class AddStatus extends Vue {
   }
 
   clear(): void {
+    const btnClear = document.getElementById("btnClear");
+    btnClear?.classList.add("clicked");
+    setTimeout(() => {
+      btnClear?.classList.remove("clicked");
+    }, 500);
+
     this.status.name = "";
+    this.status.icon = "";
+    this.status.color = "";
   }
 
   /* SNACKBAR */
@@ -158,3 +211,27 @@ export default class AddStatus extends Vue {
   }
 }
 </script>
+
+<style scoped>
+#btnClear.clicked {
+  animation: clear 0.5s ease-in-out;
+  transform: scale(1.65);
+}
+
+#btnClear:hover {
+  transition: all 0.3s;
+  transform: scale(1.65);
+}
+
+@keyframes clear {
+  0% {
+    transform: scale(1.65) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.65) rotate(-90deg);
+  }
+  100% {
+    transform: scale(1.65) rotate(0deg);
+  }
+}
+</style>

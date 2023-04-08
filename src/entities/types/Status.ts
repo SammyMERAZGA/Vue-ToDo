@@ -1,7 +1,7 @@
 export type Status = {
   id: number;
   name: string;
-  icone: string;
+  icon: string;
   color: string;
   createdAt: string;
 };
