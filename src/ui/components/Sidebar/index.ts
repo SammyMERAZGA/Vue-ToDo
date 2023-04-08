@@ -14,9 +14,9 @@ export default class Sidebar extends Vue {
     },
     { icon: "mdi-list-status", text: "Liste des status", link: "/statuts" },
     {
-      icon: "mdi-trash-can",
-      text: "Notes supprimées",
-      link: "/notes-supprimees",
+      icon: "mdi-check-circle-outline",
+      text: "Notes terminées",
+      link: "/notes-terminees",
     },
     { icon: "mdi-cog", text: "Paramètres du compte", link: "/parametres" },
   ];

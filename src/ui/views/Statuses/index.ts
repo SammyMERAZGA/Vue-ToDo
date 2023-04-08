@@ -1,11 +1,12 @@
 import { Component, Vue } from "vue-property-decorator";
-import axios from "axios";
 import moment from "moment";
 // Components
 import AddStatus from "@/ui/components/Dialogs/AddStatus.vue";
 import Snackbar from "@/ui/components/Snackbar.vue";
 // Entities
-import { Status } from "@/entities/Status";
+import { Status } from "@/entities/types/Status";
+// Services
+import { getStatuses, updateStatus, deleteStatus } from "@/services/index";
 
 @Component({
   components: {
@@ -20,7 +21,6 @@ export default class Statuses extends Vue {
     name: "",
   };
 
-  /* DIALOG */
   updateStatusDialog = false;
 
   headersStatusesTable = [
@@ -38,10 +38,10 @@ export default class Statuses extends Vue {
       "Le nom de la catégorie doit faire moins de 30 caractères",
   ];
 
-  /* CRUD */
+  // ========== CRUD ========== //
+
   async getStatuses() {
-    this.statuses = (await axios.get(process.env.VUE_APP_API_URL + `/status`))
-      .data as Status[];
+    this.statuses = await getStatuses();
     this.statuses.forEach((status) => {
       status.createdAt = moment(status.createdAt).format("DD/MM/YYYY");
     });
@@ -53,42 +53,29 @@ export default class Statuses extends Vue {
     this.updateStatusDialog = true;
   }
 
-  updateStatus(): void {
-    axios
-      .post(process.env.VUE_APP_API_URL + `/status/${this.status.id}`, {
-        name: this.status.name,
-      })
-      .then(() => {
-        this.getStatuses();
-        this.updateStatusDialog = false;
-        this.showSnackbarUpdateStatus();
-        this.status.id = 0;
-      });
+  async updateStatus(): Promise<void> {
+    await updateStatus({
+      id: this.status.id,
+      name: this.status.name,
+    });
+    this.getStatuses();
+    this.updateStatusDialog = false;
+    this.showSnackbarUpdateStatus();
+    this.status.id = 0;
   }
 
-  deleteStatus(id: number): void {
-    axios.delete(process.env.VUE_APP_API_URL + `/status/${id}`).then(() => {
-      this.getStatuses();
-      this.showSnackbarDeleteStatus();
-    });
+  async deleteStatus(id: number): Promise<void> {
+    await deleteStatus(id);
+    this.getStatuses();
+    this.showSnackbarDeleteStatus();
   }
 
   mounted(): void {
     this.getStatuses();
   }
 
-  /* SNACKBAR */
-  showSnackbarUpdateStatus(): void {
-    const snackbar = this.$refs.snackbarUpdateStatus as Snackbar;
-    snackbar.show();
-  }
+  // ========== OTHERS METHODS ========== //
 
-  showSnackbarDeleteStatus(): void {
-    const snackbar = this.$refs.snackbarDeleteStatus as Snackbar;
-    snackbar.show();
-  }
-
-  /* OTHERS METHODS */
   clear(): void {
     this.status.name = "";
   }
@@ -98,5 +85,15 @@ export default class Statuses extends Vue {
     if (position % 2 == 0) {
       return "blue lighten-5";
     }
+  }
+
+  showSnackbarUpdateStatus(): void {
+    const snackbar = this.$refs.snackbarUpdateStatus as Snackbar;
+    snackbar.show();
+  }
+
+  showSnackbarDeleteStatus(): void {
+    const snackbar = this.$refs.snackbarDeleteStatus as Snackbar;
+    snackbar.show();
   }
 }

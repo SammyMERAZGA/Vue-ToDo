@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Taches supprimées</h1>
+    <h1>Tâches terminées</h1>
   </div>
 </template>
 

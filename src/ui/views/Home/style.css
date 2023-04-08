@@ -4,3 +4,11 @@
   margin-top: 2%;
   margin-bottom: 4%;
 }
+
+.borderCard {
+  border: 2px solid #0f4cae;
+}
+
+.v-divider {
+  background-color: #0f4cae;
+}

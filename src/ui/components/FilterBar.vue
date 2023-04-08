@@ -49,11 +49,11 @@ export default class FilterBar extends Vue {}
 </script>
 
 <style scoped>
-#my-select .v-text-field--outlined fieldset {
-  border: #fd2a65 1px solid !important;
+#my-select .v-text-field--outlined >>> fieldset {
+  border: #fd2a65 2px solid !important;
 }
 
 #card-filter {
-  border: 1px solid #0b1fd0;
+  border: 2px solid #0f4cae;
 }
 </style>

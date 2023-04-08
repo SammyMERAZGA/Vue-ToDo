@@ -1,11 +1,16 @@
 import { Component, Vue } from "vue-property-decorator";
-import axios from "axios";
 import moment from "moment";
 // Components
 import AddCategory from "@/ui/components/Dialogs/AddCategory.vue";
 import Snackbar from "@/ui/components/Snackbar.vue";
 // Entities
-import { Category } from "@/entities/Category";
+import { Category } from "@/entities/types/Category";
+// Services
+import {
+  getCategories,
+  updateCategory,
+  deleteCategory,
+} from "@/services/index";
 
 @Component({
   components: {
@@ -21,7 +26,6 @@ export default class Categories extends Vue {
     description: "",
   };
 
-  /* DIALOG */
   updateCategoryDialog = false;
 
   headersCategoriesTable = [
@@ -42,11 +46,10 @@ export default class Categories extends Vue {
       "Le nom de la catégorie doit faire moins de 50 caractères",
   ];
 
-  /* CRUD */
+  // ========== CRUD ========== //
+
   async getCategories() {
-    this.categories = (
-      await axios.get(process.env.VUE_APP_API_URL + `/category`)
-    ).data as Category[];
+    this.categories = await getCategories();
     this.categories.forEach((category) => {
       category.createdAt = moment(category.createdAt).format("DD/MM/YYYY");
     });
@@ -59,43 +62,30 @@ export default class Categories extends Vue {
     this.updateCategoryDialog = true;
   }
 
-  updateCategory(): void {
-    axios
-      .post(process.env.VUE_APP_API_URL + `/category/${this.category.id}`, {
-        name: this.category.name,
-        description: this.category.description,
-      })
-      .then(() => {
-        this.getCategories();
-        this.updateCategoryDialog = false;
-        this.showSnackbarUpdateCategory();
-        this.category.id = 0;
-      });
+  async updateCategory(): Promise<void> {
+    await updateCategory({
+      id: this.category.id,
+      name: this.category.name,
+      description: this.category.description,
+    });
+    this.getCategories();
+    this.updateCategoryDialog = false;
+    this.showSnackbarUpdateCategory();
+    this.category.id = 0;
   }
 
-  deleteCategory(id: number): void {
-    axios.delete(process.env.VUE_APP_API_URL + `/category/${id}`).then(() => {
-      this.getCategories();
-      this.showSnackbarDeleteCategory();
-    });
+  async deleteCategory(id: number): Promise<void> {
+    await deleteCategory(id);
+    this.getCategories();
+    this.showSnackbarDeleteCategory();
   }
 
   mounted(): void {
     this.getCategories();
   }
 
-  /* SNACKBAR */
-  showSnackbarUpdateCategory(): void {
-    const snackbar = this.$refs.snackbarUpdateCategory as Snackbar;
-    snackbar.show();
-  }
+  // ========== OTHERS METHODS ========== //
 
-  showSnackbarDeleteCategory(): void {
-    const snackbar = this.$refs.snackbarDeleteCategory as Snackbar;
-    snackbar.show();
-  }
-
-  /* OTHERS METHODS */
   clear(): void {
     this.category.name = "";
     this.category.description = "";
@@ -106,5 +96,15 @@ export default class Categories extends Vue {
     if (position % 2 == 0) {
       return "blue lighten-5";
     }
+  }
+
+  showSnackbarUpdateCategory(): void {
+    const snackbar = this.$refs.snackbarUpdateCategory as Snackbar;
+    snackbar.show();
+  }
+
+  showSnackbarDeleteCategory(): void {
+    const snackbar = this.$refs.snackbarDeleteCategory as Snackbar;
+    snackbar.show();
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <v-container class="pa-5">
-    <h1 class="text-center pa-3 indigo--text text-deco">To Do Beast</h1>
+    <h1 class="text-center pa-3 indigo--text">To Do Beast</h1>
     <FilterBar />
     <v-row align="center" justify="center">
       <h1 class="overline indigo--text text-center">Ajouter une note</h1>
@@ -14,7 +14,7 @@
       <v-card
         v-for="note in notes"
         :key="note.id"
-        class="pa-5 ma-5 elevation-5"
+        class="pa-5 ma-5 elevation-5 rounded-xl borderCard"
         width="300"
         variant="outlined"
       >

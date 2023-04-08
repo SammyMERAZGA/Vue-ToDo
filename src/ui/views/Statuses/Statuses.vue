@@ -23,9 +23,11 @@
             :items="statuses"
             :item-class="colorRow"
             :footer-props="{
-              'items-per-page-text': 'Nb éléments par page',
+              'prev-icon': 'mdi-arrow-left-bold-circle',
+              'next-icon': 'mdi-arrow-right-bold-circle',
+              'items-per-page-text': 'Nb d\'éléments par page',
               'items-per-page-all-text': 'Tout',
-              'items-per-page-options': [10, 20, -1],
+              'items-per-page-options': [10, 20, 30],
             }"
           >
             <template v-slot:no-data>
