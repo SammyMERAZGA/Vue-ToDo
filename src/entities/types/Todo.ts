@@ -3,5 +3,9 @@ export type Todo = {
   title: string;
   description: string;
   completed: boolean;
-  createdAt: Date;
+  status_id: number;
+  category_id: number;
+  user_id: number;
+  created_at: any;
+  is_favorite: boolean;
 };

@@ -2,6 +2,23 @@ import axios from "../caller.service";
 // Entities
 import { Status } from "@/entities/types/Status";
 
+export async function createStatus({
+  name,
+  icon,
+  color,
+}: {
+  name: string;
+  icon: string;
+  color: string;
+}) {
+  await axios.post(`/status`, {
+    name,
+    icon,
+    color,
+    created_at: new Date(),
+  });
+}
+
 export async function getStatuses() {
   const statuses = await axios.get(`/status`);
 

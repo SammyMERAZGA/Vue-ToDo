@@ -35,7 +35,7 @@ export default class Categories extends Vue {
       value: "name",
     },
     { text: "Description", value: "description" },
-    { text: "Date de création", value: "createdAt" },
+    { text: "Date de création", value: "created_at" },
     { text: "Actions", value: "actions", sortable: false },
   ];
 
@@ -48,10 +48,10 @@ export default class Categories extends Vue {
 
   // ========== CRUD ========== //
 
-  async getCategories() {
+  async loadCategories(): Promise<void> {
     this.categories = await getCategories();
     this.categories.forEach((category) => {
-      category.createdAt = moment(category.createdAt).format("DD/MM/YYYY");
+      category.created_at = moment(category.created_at).format("DD/MM/YYYY");
     });
   }
 
@@ -68,7 +68,7 @@ export default class Categories extends Vue {
       name: this.category.name,
       description: this.category.description,
     });
-    this.getCategories();
+    this.loadCategories();
     this.updateCategoryDialog = false;
     this.showSnackbarUpdateCategory();
     this.category.id = 0;
@@ -76,12 +76,12 @@ export default class Categories extends Vue {
 
   async deleteCategory(id: number): Promise<void> {
     await deleteCategory(id);
-    this.getCategories();
+    this.loadCategories();
     this.showSnackbarDeleteCategory();
   }
 
   mounted(): void {
-    this.getCategories();
+    this.loadCategories();
   }
 
   // ========== OTHERS METHODS ========== //

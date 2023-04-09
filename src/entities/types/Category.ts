@@ -2,5 +2,5 @@ export type Category = {
   id: number;
   name: string;
   description: string;
-  createdAt: string;
+  created_at: string;
 };

@@ -24,14 +24,14 @@ export default class Statuses extends Vue {
   };
 
   updateStatusDialog = false;
+  snackbarRefresh = false;
 
   headersStatusesTable = [
     { text: "Nom", value: "name", class: "indigo--text text--darken-4" },
     { text: "Icône", value: "icon", class: "indigo--text text--darken-4" },
-    { text: "Couleur", value: "color", class: "indigo--text text--darken-4" },
     {
       text: "Date de création",
-      value: "createdAt",
+      value: "created_at",
       class: "indigo--text text--darken-4",
     },
     {
@@ -43,8 +43,9 @@ export default class Statuses extends Vue {
   ];
 
   icons = [
-    { name: "Validé", value: "mdi-check" },
-    { name: "Fermer", value: "mdi-close" },
+    { name: "À faire", value: "mdi-calendar-clock" },
+    { name: "En cours", value: "mdi-progress-helper" },
+    { name: "Terminée", value: "mdi-check-decagram" },
   ];
 
   nameRules = [
@@ -59,7 +60,7 @@ export default class Statuses extends Vue {
   async getStatuses() {
     this.statuses = await getStatuses();
     this.statuses.forEach((status) => {
-      status.createdAt = moment(status.createdAt).format("DD/MM/YYYY");
+      status.created_at = moment(status.created_at).format("DD/MM/YYYY");
     });
   }
 
@@ -82,12 +83,13 @@ export default class Statuses extends Vue {
     this.updateStatusDialog = false;
     this.showSnackbarUpdateStatus();
     this.status.id = 0;
+    this.clear();
   }
 
   async deleteStatus(id: number): Promise<void> {
     await deleteStatus(id);
-    this.getStatuses();
     this.showSnackbarDeleteStatus();
+    this.getStatuses();
   }
 
   mounted(): void {
@@ -95,6 +97,10 @@ export default class Statuses extends Vue {
   }
 
   // ========== OTHERS METHODS ========== //
+
+  tooManyRequests(): void {
+    // if code http = 429
+  }
 
   clear(): void {
     this.status.name = "";
@@ -121,6 +127,16 @@ export default class Statuses extends Vue {
 
   showSnackbarDeleteStatus(): void {
     const snackbar = this.$refs.snackbarDeleteStatus as Snackbar;
+    snackbar.show();
+  }
+
+  isActionButtonDisabled(name: string): boolean {
+    return name === "En cours" || name === "À faire" || name === "Terminée";
+  }
+
+  refresh(): void {
+    this.getStatuses();
+    const snackbar = this.$refs.snackbarRefresh as Snackbar;
     snackbar.show();
   }
 }

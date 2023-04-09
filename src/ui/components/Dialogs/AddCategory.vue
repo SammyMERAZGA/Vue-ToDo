@@ -150,7 +150,7 @@ export default class AddCategory extends Vue {
         .then(() => {
           this.addCategoryDialog = false;
           this.overlay = false;
-          (this.$parent as Categories).getCategories();
+          (this.$parent as Categories).loadCategories();
           this.showSnackbarAddCategory();
           this.category.name = "";
           this.category.description = "";

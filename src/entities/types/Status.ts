@@ -3,5 +3,5 @@ export type Status = {
   name: string;
   icon: string;
   color: string;
-  createdAt: string;
+  created_at: string;
 };

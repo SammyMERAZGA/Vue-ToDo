@@ -1,14 +1,39 @@
-#beast {
-  border-radius: 40%;
-  border: 2px solid #000;
-  margin-top: 2%;
-  margin-bottom: 4%;
-}
-
 .borderCard {
   border: 2px solid #0f4cae;
 }
 
 .v-divider {
   background-color: #0f4cae;
+}
+
+/* Importer la police de Dragon Ball Z */
+@import url("https://fonts.googleapis.com/css2?family=Kavoon&display=swap");
+
+/* Appliquer la police de Dragon Ball Z au titre */
+#title {
+  font-family: "Kavoon", cursive;
+  font-size: 3rem;
+  text-align: center;
+  color: #0f4cae;
+  padding: 10px;
+}
+
+/* Animer le titre lors du hover */
+#title:hover {
+  animation: title-hover 0.5s ease-in-out forwards;
+  color: #fd2a65;
+  padding: 12px;
+}
+
+/* Animer le titre lors du hover */
+@keyframes title-hover {
+  0% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }

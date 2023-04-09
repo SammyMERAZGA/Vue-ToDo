@@ -127,12 +127,15 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import axios from "axios";
 // Views
 import Statuses from "@/ui/views/Statuses/Statuses.vue";
 // Components
 import Overlay from "../Overlay.vue";
 import Snackbar from "../Snackbar.vue";
+// Entities
+import { Status } from "@/entities/types/Status";
+// Services
+import { createStatus } from "@/services/index";
 
 @Component({
   components: {
@@ -141,10 +144,12 @@ import Snackbar from "../Snackbar.vue";
   },
 })
 export default class AddStatus extends Vue {
-  status = {
+  status: Status = {
+    id: 0,
     name: "",
     icon: "",
     color: "",
+    created_at: "",
   };
 
   addStatusDialog = false;
@@ -157,33 +162,22 @@ export default class AddStatus extends Vue {
   ];
 
   icons = [
-    { name: "Validé", value: "mdi-check" },
-    { name: "Fermer", value: "mdi-close" },
+    { name: "À faire", value: "mdi-calendar-clock" },
+    { name: "En cours", value: "mdi-progress-helper" },
+    { name: "Terminée", value: "mdi-check-decagram" },
   ];
 
-  addStatus(): void {
+  async addStatus(): Promise<void> {
     if (this.status.name === "") {
       this.showSnackbarFieldsMissing();
-      return;
     } else {
       this.overlay = true;
-      axios
-        .post(process.env.VUE_APP_API_URL + `/status`, {
-          name: this.status.name,
-          icon: this.status.icon,
-          color: this.status.color,
-          createdAt: new Date(),
-        })
-        .then(() => {
-          this.addStatusDialog = false;
-          this.overlay = false;
-          (this.$parent as Statuses).getStatuses();
-          this.showSnackbarAddStatus();
-          this.status.name = "";
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      await createStatus(this.status);
+      this.overlay = false;
+      this.addStatusDialog = false;
+      (this.$parent as Statuses).getStatuses();
+      this.showSnackbarAddStatus();
+      this.clear();
     }
   }
 

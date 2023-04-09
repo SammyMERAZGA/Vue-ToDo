@@ -39,11 +39,18 @@
                 {{ props.itemsLength }}</span
               >
             </template>
+            <template v-slot:[`item.icon`]="{ item }">
+              <v-icon :color="item.color">{{ item.icon }}</v-icon>
+            </template>
             <template v-slot:[`item.actions`]="{ item }">
-              <v-btn icon @click="editStatus(item)">
+              <v-btn
+                :disabled="isActionButtonDisabled(item.name)"
+                icon
+                @click="editStatus(item)"
+              >
                 <v-icon small color="indigo darken-1"> mdi-pencil </v-icon>
               </v-btn>
-              <v-btn icon>
+              <v-btn :disabled="isActionButtonDisabled(item.name)" icon>
                 <v-icon
                   small
                   color="pink lighten-1"
@@ -57,10 +64,27 @@
         </v-card>
       </v-row>
       <v-row class="mt-15" justify="center" align="center">
-        <v-tooltip top color="#fd2a65">
+        <v-tooltip left color="#fd2a65">
           <template v-slot:activator="{ on, attrs }">
             <v-btn
-              class="mx-2 borderBtn"
+              class="mx-3 borderBtn"
+              color="#fd2a65"
+              v-bind="attrs"
+              v-on="on"
+              fab
+              small
+              dark
+              @click="refresh()"
+            >
+              <v-icon>mdi-cached</v-icon>
+            </v-btn>
+          </template>
+          <span class="font-weight-black">Rafraîchir la liste</span>
+        </v-tooltip>
+        <v-tooltip right color="#fd2a65">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              class="mx-3 borderBtn"
               color="#fd2a65"
               v-bind="attrs"
               v-on="on"
@@ -75,6 +99,13 @@
           <span class="font-weight-black"> Retourner en haut </span>
         </v-tooltip>
       </v-row>
+      <Snackbar
+        message="La liste des statuts a été mise à jour !"
+        color="#fd2a65"
+        bottom="true"
+        right="true"
+        ref="snackbarRefresh"
+      />
       <!-- DIALOG UPDATE -->
       <v-dialog
         class="mb-15"
