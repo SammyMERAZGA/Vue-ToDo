@@ -29,6 +29,7 @@ export default class Statuses extends Vue {
   headersStatusesTable = [
     { text: "Nom", value: "name", class: "indigo--text text--darken-4" },
     { text: "Icône", value: "icon", class: "indigo--text text--darken-4" },
+    { text: "Couleur", value: "color", class: "indigo--text text--darken-4" },
     {
       text: "Date de création",
       value: "created_at",
@@ -98,12 +99,10 @@ export default class Statuses extends Vue {
 
   // ========== OTHERS METHODS ========== //
 
-  tooManyRequests(): void {
-    // if code http = 429
-  }
-
   clear(): void {
     this.status.name = "";
+    this.status.icon = "";
+    this.status.color = "";
   }
 
   goToTop(): void {

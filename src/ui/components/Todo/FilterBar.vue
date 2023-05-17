@@ -1,22 +1,7 @@
 <template>
   <v-card elevation="3" class="mb-10 rounded-xl px-3 py-2" id="card-filter">
-    <div class="d-flex">
-      <v-col class="d-flex" cols="4" sm="4" id="my-select">
-        <v-autocomplete
-          class="rounded-lg"
-          label="Catégorie"
-          :items="categories"
-          item-text="name"
-          item-value="id"
-          no-data-text="Aucune catégorie"
-          hide-details="true"
-          color="#fd2a65"
-          outlined
-          dense
-          clearable
-        ></v-autocomplete>
-      </v-col>
-      <v-col class="d-flex" cols="4" sm="4" id="my-select">
+    <v-row class="pa-3" justify="center" align="center">
+      <v-col class="d-flex" cols="5" id="my-select">
         <v-autocomplete
           label="Statut"
           :items="statuses"
@@ -31,7 +16,7 @@
           clearable
         ></v-autocomplete>
       </v-col>
-      <v-col class="d-flex" cols="4" sm="4" id="my-select">
+      <v-col class="d-flex" cols="5" id="my-select">
         <v-autocomplete
           label="Favoris"
           :items="favoritesTodos"
@@ -46,28 +31,22 @@
           clearable
         ></v-autocomplete>
       </v-col>
-    </div>
+    </v-row>
   </v-card>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 // Entities
-import { Category } from "@/entities/types/Category";
 import { Status } from "@/entities/types/Status";
 import { Todo } from "@/entities/types/Todo";
 // Services
-import { getCategories, getFavoriteTodos, getStatuses } from "@/services";
+import { getFavoriteTodos, getStatuses } from "@/services";
 
 @Component
 export default class FilterBar extends Vue {
-  categories: Category[] = [];
   statuses: Status[] = [];
   favoritesTodos: Todo[] = [];
-
-  async loadCategories(): Promise<void> {
-    this.categories = await getCategories();
-  }
 
   async loadStatuses(): Promise<void> {
     this.statuses = await getStatuses();
@@ -78,7 +57,6 @@ export default class FilterBar extends Vue {
   }
 
   mounted() {
-    this.loadCategories();
     this.loadStatuses();
     this.loadTodosFavorites();
   }

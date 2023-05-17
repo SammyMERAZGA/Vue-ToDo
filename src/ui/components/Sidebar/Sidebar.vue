@@ -36,17 +36,6 @@
         </v-list-item-group>
       </v-list>
     </v-card>
-
-    <div id="logout">
-      <v-tooltip right color="#fd2a65">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-on="on" v-bind="attrs" to="/">
-            <v-icon color="white">mdi-logout</v-icon>
-          </v-btn>
-        </template>
-        <span>Se déconnecter</span>
-      </v-tooltip>
-    </div>
   </v-navigation-drawer>
 </template>
 

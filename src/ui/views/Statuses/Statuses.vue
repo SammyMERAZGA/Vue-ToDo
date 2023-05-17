@@ -42,6 +42,9 @@
             <template v-slot:[`item.icon`]="{ item }">
               <v-icon :color="item.color">{{ item.icon }}</v-icon>
             </template>
+            <template v-slot:[`item.color`]="{ item }">
+              <v-icon :color="item.color">mdi-circle-slice-8</v-icon>
+            </template>
             <template v-slot:[`item.actions`]="{ item }">
               <v-btn
                 :disabled="isActionButtonDisabled(item.name)"

@@ -44,7 +44,18 @@ export async function getFavoriteTodos() {
     return todos.filter((todo) => todo.is_favorite === true);
   });
 
-  console.log(favorites);
-
   return favorites;
+}
+
+export async function todoDone(id: number) {
+  await axios.put(`/todo/${id}`, {
+    completed: true,
+  });
+}
+
+export async function todoFavorite(id: number) {
+  await axios.put(`/todo/${id}`, {
+    is_favorite: true,
+  });
+  getFavoriteTodos();
 }

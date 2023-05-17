@@ -37,3 +37,35 @@
     transform: translateX(0);
   }
 }
+
+.borderCard {
+  border: 2px solid #0f4cae;
+}
+
+.v-divider {
+  background-color: #0f4cae;
+}
+
+#todoCard:hover {
+  transform: scale(1.08);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: #f4f4f4;
+}
+
+#todoCard:hover h3 {
+  transform: translateX(5px);
+}
+
+#todoCard:hover p {
+  transform: translateX(10px);
+}
+
+#heart:hover {
+  transform: scale(1.5);
+  transition: transform 0.3s ease-in-out;
+}
+
+#check:hover {
+  transform: scale(1.5);
+  transition: transform 0.3s ease-in-out;
+}

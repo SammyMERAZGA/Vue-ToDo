@@ -103,7 +103,7 @@
           >
             Annuler
           </v-btn>
-          <v-btn class="rounded-xl" color="#00296b" text @click="addStatus()">
+          <v-btn class="rounded-xl" color="#023e8a" text @click="addStatus()">
             Ajouter
           </v-btn>
         </v-card-actions>
@@ -205,27 +205,3 @@ export default class AddStatus extends Vue {
   }
 }
 </script>
-
-<style scoped>
-#btnClear.clicked {
-  animation: clear 0.5s ease-in-out;
-  transform: scale(1.65);
-}
-
-#btnClear:hover {
-  transition: all 0.3s;
-  transform: scale(1.65);
-}
-
-@keyframes clear {
-  0% {
-    transform: scale(1.65) rotate(0deg);
-  }
-  50% {
-    transform: scale(1.65) rotate(-90deg);
-  }
-  100% {
-    transform: scale(1.65) rotate(0deg);
-  }
-}
-</style>

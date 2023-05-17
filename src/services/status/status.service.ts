@@ -17,12 +17,13 @@ export async function createStatus({
     color,
     created_at: new Date(),
   });
+  getStatuses();
 }
 
 export async function getStatuses() {
-  const statuses = await axios.get(`/status`);
+  const status = await axios.get(`/status`);
 
-  return statuses.data as Status[];
+  return status.data as Status[];
 }
 
 export function updateStatus({
@@ -36,13 +37,15 @@ export function updateStatus({
   icon: string;
   color: string;
 }) {
-  axios.post(`/status/${id}`, {
+  axios.put(`/status/${id}`, {
     name,
     icon,
     color,
   });
+  getStatuses();
 }
 
 export function deleteStatus(id: number) {
   axios.delete(`/status/${id}`);
+  getStatuses();
 }

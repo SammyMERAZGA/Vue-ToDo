@@ -1,3 +1,2 @@
-export * from "./categories/categories.service";
-export * from "./statuses/statuses.service";
+export * from "./status/status.service";
 export * from "./todos/todo.service";
